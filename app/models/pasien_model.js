@@ -32,11 +32,11 @@ module.exports = (sequelize, Sequelize) => {
         },
         riwayat_penyakit_sistemik:{
             type: Sequelize.STRING(50),
-            allowNull:false
+            allowNull:true
         },
         alergi_obat:{
             type: Sequelize.STRING(50),
-            allowNull:false
+            allowNull:true,
         }
     });
   

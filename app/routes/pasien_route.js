@@ -10,13 +10,13 @@ module.exports = app => {
     router.get("/", pasiens.findAll);
   
     // Retrieve a single Pasien with id
-    router.get("/:id", pasiens.findOne);
+    router.get("/:pasien_id", pasiens.findOne);
   
     // Update a Pasien with id
-    router.put("/:id", pasiens.update);
+    router.put("/:pasien_id", pasiens.update);
   
     // Delete a Pasien with id
-    router.delete("/:id", pasiens.delete);
+    router.delete("/:pasien_id", pasiens.delete);
     
     app.use('/api/pasiens', router);
   };

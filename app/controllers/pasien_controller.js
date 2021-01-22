@@ -26,15 +26,15 @@ exports.create = (req, res) => {
     
       // Save Pasien in the database
       Pasien.create(pasien)
-        .then(data => {
-          res.send(data);
-        })
-        .catch(err => {
-          res.status(500).send({
-            message:
-              err.message || "Some error occurred while creating the Device."
-          });
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while creating the Device."
         });
+      });
 };
 
 // Retrieve all Pasien from the database.
@@ -59,13 +59,13 @@ exports.findOne = (req, res) => {
     const id = req.params.pasien_id;
 
     Pasien.findByPk(id)
-        .then(data => {
-            res.send(data);
-        })
-    .catch(err => {
-      res.status(500).send({
-        message: "Error retrieving Pasien with id= " + id
-      });
+      .then(data => {
+          res.send(data);
+      })
+      .catch(err => {
+          res.status(500).send({
+            message: "Error retrieving Pasien with id= " + id
+          });
     });
 };
 
@@ -108,7 +108,7 @@ exports.delete = (req, res) => {
             });
             } else {
             res.send({
-                message: `Cannot delete Pasien with id=${id}. Maybe Device was not found!`
+                message: `Cannot delete Pasien with id=${id}. Maybe Pasien was not found!`
             });
             }
         })
