@@ -10,6 +10,10 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING(35),
             allowNull:false
         },
+        jenis_kelamin:{
+            type:Sequelize.STRING(6),
+            allowNull:false
+        },
         tempat_lahir:{
             type: Sequelize.STRING(15),
             allowNull:false
@@ -32,6 +36,10 @@ module.exports = (sequelize, Sequelize) => {
         },
         riwayat_penyakit_sistemik:{
             type: Sequelize.STRING(50),
+            allowNull:true
+        },
+        info_klinik:{
+            type:Sequelize.STRING(10),
             allowNull:true
         },
         alergi_obat:{

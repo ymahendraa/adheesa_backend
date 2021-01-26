@@ -15,12 +15,14 @@ exports.create = (req, res) => {
       // Create a Pasien
       const pasien = {
         nama_pasien: req.body.nama_pasien,
+        jenis_kelamin: req.body.jenis_kelamin,
         tempat_lahir:req.body.tempat_lahir,
         tanggal_lahir:req.body.tanggal_lahir,
         alamat:req.body.alamat,
         no_hp:req.body.no_hp,
         pekerjaan:req.body.pekerjaan,
         riwayat_penyakit_sistemik:req.body.riwayat_penyakit_sistemik,
+        info_klinik:req.body.info_klinik,
         alergi_obat:req.body.alergi_obat,
       };
     
