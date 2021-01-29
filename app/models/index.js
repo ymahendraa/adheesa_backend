@@ -22,5 +22,6 @@ db.sequelize = sequelize;
 db.pasien = require("./pasien_model.js")(sequelize, Sequelize);
 db.riwayat = require("./riwayat_penyakit_dental_model.js")(sequelize, Sequelize);
 db.kunjungan = require("./kunjungan_model")(sequelize, Sequelize);
+db.dataLab = require("./datalab_model")(sequelize, Sequelize);
 
 module.exports = db;

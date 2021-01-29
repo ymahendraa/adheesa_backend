@@ -23,6 +23,7 @@ app.get("/", (req, res) => {
 
 require("./app/routes/pasien_route")(app);
 require("./app/routes/riwayat_penyakit_route")(app);
+require("./app/routes/datalab_route")(app)
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

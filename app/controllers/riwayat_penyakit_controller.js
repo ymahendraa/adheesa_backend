@@ -37,8 +37,8 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-    const tanggal = req.query.tanggal;
-    var condition = tanggal ? { tanggal : { [Op.like]: `%${tanggal}%` }} : null;
+    // const tanggal = req.query.tanggal;
+    // var condition = tanggal ? { tanggal : { [Op.like]: `%${tanggal}%` }} : null;
     var condition2 = {pasien_id : req.params.pasien_id}
 
     Riwayat.findAll({where : condition2})
