@@ -7,7 +7,7 @@ module.exports = app => {
     router.post("/", datalabs.create);
   
     // Retrieve all Pasien
-    router.get("/:pasien_id", datalabs.findAll);
+    router.get("/", datalabs.findAll);
   
     // Retrieve a single Pasien with id
     router.get("/:data_id", datalabs.findOne);

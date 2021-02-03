@@ -10,7 +10,7 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.INTEGER(5),
         allowNull:false,
         references:{
-          model: 'pasiens',
+          model: 'Pasien',
           key: 'pasien_id'
         }
       },
@@ -26,9 +26,21 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING(20),
         allowNull:false
       },
+      tekanan_darah:{
+        type:Sequelize.STRING(7),
+        allowNull:true
+      },
+      obat:{
+          type:Sequelize.STRING(10),
+          allowNull:true
+      },
       perawatan:{
         type: Sequelize.STRING(30),
         allowNull:false
+      },
+      keterangan:{
+        type: Sequelize.STRING(150),
+        allowNullL:true
       },
       rencana_perawatan:{
         type: Sequelize.STRING(30),
@@ -39,13 +51,13 @@ module.exports = (sequelize, Sequelize) => {
         allowNull:false
       },
       dpjp:{
-        type: Sequelize.STRING(12),
+        type: Sequelize.STRING(30),
         allowNull:false
       }
     });
   
     RiwayatPenyakitDental.associate = (models) =>{
-      riwayat_penyakit.belongsTo(models.pasien,{ foreignKey:'pasien_id' });
+      riwayat_penyakit.belongsTo(models.Pasien,{ foreignKey:'pasien_id' });
     }
 
     return RiwayatPenyakitDental;

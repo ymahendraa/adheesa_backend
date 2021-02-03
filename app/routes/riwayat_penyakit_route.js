@@ -8,9 +8,12 @@ module.exports = app => {
   
     // Retrieve all Pasien
     router.get("/:pasien_id", riwayats.findAll);
+    router.get("/dpjp/drg.kamil", riwayats.findKamil);
+    router.get("/dpjp/drg.ammar", riwayats.findAmmar);
+    router.get("/dpjp/drg.resya", riwayats.findResya);
   
     // Retrieve a single Pasien with id
-    router.get("/:riwayat_id", riwayats.findOne);
+    router.get("/riwayat/:riwayat_id", riwayats.findOne);
   
     // Update a Pasien with id
     router.put("/:riwayat_id", riwayats.update);

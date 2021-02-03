@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const DataLab = sequelize.define("data_lab", {
+    const DataLab = sequelize.define("DataLab", {
         data_id : {
             type: Sequelize.INTEGER(5),
             allowNull:false,
@@ -10,7 +10,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER(5),
             allowNull:false,
             references:{
-              model: 'pasiens',
+              model: 'Pasien',
               key: 'pasien_id'
             }  
         },
@@ -19,15 +19,15 @@ module.exports = (sequelize, Sequelize) => {
             allowNull:false
         },
         jenis_pekerjaan:{
-            type: Sequelize.STRING(20),
+            type: Sequelize.STRING(30),
             allowNull:false,
         },
         jumlah:{
-            type: Sequelize.STRING(20),
+            type: Sequelize.STRING(30),
             allowNull:false,
         },
         lab:{
-            type: Sequelize.STRING(20),
+            type: Sequelize.STRING(30),
             allowNull:false,
         },
         biaya:{
@@ -35,14 +35,14 @@ module.exports = (sequelize, Sequelize) => {
             allowNull:false
         },
         dpjp:{
-            type: Sequelize.STRING(12),
+            type: Sequelize.STRING(30),
             allowNull:false
         }
 
     });
 
     DataLab.associate = (models) =>{
-        data_lab.belongsTo(models.pasien,{ foreignKey:'pasien_id' });
+        DataLab.belongsTo(models.Pasien,{ foreignKey:'pasien_id' });
     }
     return DataLab;
 }

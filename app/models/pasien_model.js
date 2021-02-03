@@ -1,5 +1,8 @@
+const { pasien } = require(".");
+const { USER } = require("../config/db.config");
+
 module.exports = (sequelize, Sequelize) => {
-    const Pasien = sequelize.define("pasien", {
+    const Pasien = sequelize.define("Pasien", {
         pasien_id:{
             type: Sequelize.INTEGER(5),
             allowNull:false,
@@ -47,6 +50,10 @@ module.exports = (sequelize, Sequelize) => {
             allowNull:true,
         }
     });
+
+    Pasien.associate = models => {
+        Pasien.hasMany(models.DataLab, {foreignKey: 'pasien_id'});
+    }
   
     return Pasien;
   };

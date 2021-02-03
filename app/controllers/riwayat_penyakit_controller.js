@@ -17,13 +17,15 @@ exports.create = (req, res) => {
       tanggal:req.body.tanggal,
       unsur_regio:req.body.unsur_regio,
       keluhan:req.body.keluhan,
+      tekanan_darah:req.body.tekanan_darah,
+      obat:req.body.obat,
       perawatan:req.body.perawatan,
+      keterangan:req.body.keterangan,
       rencana_perawatan:req.body.rencana_perawatan,
       biaya:req.body.biaya,
       dpjp:req.body.dpjp
     };
   
-
     Riwayat.create(riwayat)
       .then(data => {
         res.send(data);
@@ -42,6 +44,57 @@ exports.findAll = (req, res) => {
     var condition2 = {pasien_id : req.params.pasien_id}
 
     Riwayat.findAll({where : condition2})
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving riwayat."
+        });
+    });
+};
+
+exports.findKamil = (req, res) => {
+    // const dpjp = req.params.dpjp;
+    // var condition = tanggal ? { tanggal : { [Op.like]: `%${tanggal}%` }} : null;
+    var condition = {dpjp : 'drg.Muhammad Kamil Nur'}
+
+    Riwayat.findAll({where : condition})
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving riwayat."
+        });
+    });
+};
+
+exports.findAmmar = (req, res) => {
+    // const tanggal = req.query.tanggal;
+    // var condition = tanggal ? { tanggal : { [Op.like]: `%${tanggal}%` }} : null;
+    var condition = {dpjp : 'drg.Ammar Abdullah'}
+
+    Riwayat.findAll({where : condition})
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving riwayat."
+        });
+    });
+};
+
+exports.findResya = (req, res) => {
+    // const tanggal = req.query.tanggal;
+    // var condition = tanggal ? { tanggal : { [Op.like]: `%${tanggal}%` }} : null;
+    var condition = {dpjp : 'drg.Resya Permatasari'}
+
+    Riwayat.findAll({where : condition})
         .then(data => {
             res.send(data);
         })

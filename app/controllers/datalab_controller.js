@@ -1,6 +1,10 @@
 const db = require("../models");
 const DataLab = db.dataLab;
+const Pasien = db.pasien;
 const Op = db.Sequelize.Op;
+
+Pasien.hasMany(DataLab, {foreignKey:'pasien_id'} );
+DataLab.belongsTo(Pasien, {foreignKey:'pasien_id'});
 
 exports.create = (req, res) => {
     if(!req.body.pasien_id) {
@@ -35,9 +39,16 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
     const nama = req.query.nama_pasien;
     var condition1 = nama ? { nama_pasien : { [Op.like]: `%${nama}%` }} : null;
-    var condition2 = {pasien_id : req.params.pasien_id}
+    // var condition2 = {pasien_id : req.params.pasien_id}
     // { [Op.or]:[condition2, condition1]}
-    DataLab.findAll({where : { condition2, condition1} })
+    DataLab.findAll({
+        where: {
+            '$Pasien.nama_pasien$': { [Op.like]: `%${nama}%` }
+        },
+        include: [{
+            model: Pasien
+        }]}
+        )
         .then(data => {
             res.send(data);
         })

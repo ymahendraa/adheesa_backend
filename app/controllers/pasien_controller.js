@@ -22,6 +22,7 @@ exports.create = (req, res) => {
         no_hp:req.body.no_hp,
         pekerjaan:req.body.pekerjaan,
         riwayat_penyakit_sistemik:req.body.riwayat_penyakit_sistemik,
+        obat:req.body.obat,
         info_klinik:req.body.info_klinik,
         alergi_obat:req.body.alergi_obat,
       };
