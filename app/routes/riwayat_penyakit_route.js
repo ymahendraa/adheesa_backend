@@ -1,25 +1,26 @@
 module.exports = app => {
-    const riwayats = require('../controllers/riwayat_penyakit_controller');
+    const riwayat = require('../controllers/riwayat_penyakit_controller');
 
     var router = require("express").Router();
   
     // Create a new Pasien
-    router.post("/", riwayats.create);
+    router.post("/", riwayat.create);
   
     // Retrieve all Pasien
-    router.get("/:pasien_id", riwayats.findAll);
-    router.get("/dpjp/drg.kamil", riwayats.findKamil);
-    router.get("/dpjp/drg.ammar", riwayats.findAmmar);
-    router.get("/dpjp/drg.resya", riwayats.findResya);
+    router.get("/", riwayat.findAll);
+    router.get("/:pasien_id", riwayat.findAllOne);
+    router.get("/dpjp/drg.kamil", riwayat.findKamil);
+    router.get("/dpjp/drg.ammar", riwayat.findAmmar);
+    router.get("/dpjp/drg.resya", riwayat.findResya);
   
     // Retrieve a single Pasien with id
-    router.get("/riwayat/:riwayat_id", riwayats.findOne);
+    router.get("/riwayat/:riwayat_id", riwayat.findOne);
   
     // Update a Pasien with id
-    router.put("/:riwayat_id", riwayats.update);
+    router.put("/:riwayat_id", riwayat.update);
   
     // Delete a Pasien with id
-    router.delete("/:riwayat_id", riwayats.delete);
+    router.delete("/:riwayat_id", riwayat.delete);
     
     app.use('/api/riwayats', router);
   };

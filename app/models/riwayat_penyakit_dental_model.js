@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const RiwayatPenyakitDental = sequelize.define("riwayat_penyakit", {
+    const RiwayatPenyakit = sequelize.define("RiwayatPenyakit", {
       riwayat_id:{
         type: Sequelize.INTEGER(5),
         allowNull:false,
@@ -56,9 +56,9 @@ module.exports = (sequelize, Sequelize) => {
       }
     });
   
-    RiwayatPenyakitDental.associate = (models) =>{
-      riwayat_penyakit.belongsTo(models.Pasien,{ foreignKey:'pasien_id' });
+    RiwayatPenyakit.associate = (models) =>{
+      RiwayatPenyakit.belongsTo(models.Pasien,{ foreignKey:'pasien_id' });
     }
 
-    return RiwayatPenyakitDental;
+    return RiwayatPenyakit;
   };

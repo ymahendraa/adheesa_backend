@@ -1,6 +1,10 @@
 const db = require("../models");
 const Riwayat = db.riwayat;
 const Op = db.Sequelize.Op;
+const Pasien = db.pasien;
+
+Pasien.hasMany(Riwayat, {foreignKey:'pasien_id'} );
+Riwayat.belongsTo(Pasien, {foreignKey:'pasien_id'});
 
 exports.create = (req, res) => {
     // Validate request
@@ -39,11 +43,34 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-    // const tanggal = req.query.tanggal;
-    // var condition = tanggal ? { tanggal : { [Op.like]: `%${tanggal}%` }} : null;
-    var condition2 = {pasien_id : req.params.pasien_id}
+    const tanggal = req.query.tanggal;
+    var condition = tanggal ? { tanggal : { [Op.like]: `%${tanggal}%` }} : null;
+    // var condition2 = {pasien_id : req.params.pasien_id}
 
-    Riwayat.findAll({where : condition2})
+    Riwayat.findAll({
+        where: {
+            tanggal : { [Op.like]: `%${tanggal}%` }
+        },
+        include: [{
+            model: Pasien
+        }]})
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving riwayat."
+        });
+    });
+};
+
+exports.findAllOne = (req, res) => {
+    const tanggal = req.query.tanggal;
+    var condition = tanggal ? { tanggal : { [Op.like]: `%${tanggal}%` }} : null;
+    // var condition2 = {pasien_id : req.params.pasien_id}
+
+    Riwayat.findAll({where : condition})
         .then(data => {
             res.send(data);
         })

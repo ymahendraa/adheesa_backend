@@ -1,6 +1,10 @@
 const db = require("../models");
 const Kunjungan = db.kunjungan;
+const Riwayat = db.riwayat;
 const Op = db.Sequelize.Op;
+
+Riwayat.hasMany(Kunjungan, {foreignKey:'riwayat_id'});
+Kunjungan.belongsTo(Riwayat, {foreignKey:'riwayat_id'});
 
 exports.create = (req, res) => {
     if(!req.body.riwayat_id) {
@@ -27,10 +31,17 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-    const riwayat_id = req.query.riwayat_id;
-    var condition = riwayat_id ? { riwayat_id: { [Op.like]: `%${riwayat_id}%` } } : null;
+    const tanggal = req.query.tanggal;
+    // var condition = riwayat_id ? { riwayat_id: { [Op.like]: `%${riwayat_id}%` } } : null;
   
-    Kunjungan.findAll({ where : condition })
+    Kunjungan.findAll({
+        where: {
+            '$Riwayat.tanggal$': { [Op.like]: `%${tanggal}%` }
+        },
+        include: [{
+            model: Riwayat
+        }]}
+        )
         .then(data => {
             res.send(data);
       })

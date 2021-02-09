@@ -1,22 +1,22 @@
 module.exports = app => {
-    const datalabs = require('../controllers/datalab_controller');
+    const datalab = require('../controllers/datalab_controller');
 
     var router = require("express").Router();
   
     // Create a new Pasien
-    router.post("/", datalabs.create);
+    router.post("/", datalab.create);
   
     // Retrieve all Pasien
-    router.get("/", datalabs.findAll);
+    router.get("/", datalab.findAll);
   
     // Retrieve a single Pasien with id
-    router.get("/:data_id", datalabs.findOne);
+    router.get("/:data_id", datalab.findOne);
   
     // Update a Pasien with id
-    router.put("/:data_id", datalabs.update);
+    router.put("/:data_id", datalab.update);
   
     // Delete a Pasien with id
-    router.delete("/:data_id", datalabs.delete);
+    router.delete("/:data_id", datalab.delete);
     
     app.use('/api/datalabs', router);
   };
