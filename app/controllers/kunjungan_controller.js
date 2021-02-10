@@ -52,3 +52,35 @@ exports.findAll = (req, res) => {
         });
       });
 };
+
+exports.findKamil = (req, res) => {
+    // const dpjp = req.params.dpjp;
+    // var condition = tanggal ? { tanggal : { [Op.like]: `%${tanggal}%` }} : null;
+    var condition = {dpjp : 'drg.Muhammad Kamil Nur'}
+    const tanggal = req.query.tanggal;
+
+    Kunjungan.findAndCountAll({
+        where: {
+            '$Riwayat.dpjp$': 'drg.Muhammad Kamil Nur'
+        },
+        include: [{
+            model: Riwayat,
+            where: {
+                '$Riwayat.tanggal$' : {[Op.like]: `%${tanggal}%`}
+            }
+        }],
+        attributes: ['kunjungan_id', [sequelize.fn('sum', sequelize.col('$Riwayat.biaya$')), 'total']],
+        group : ['Kunjungan.kunjungan_id'],
+        raw: true,
+        order: sequelize.literal('total DESC')
+    })
+        .then(data => {
+            res.send(data.count);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving riwayat."
+        });
+    });
+};

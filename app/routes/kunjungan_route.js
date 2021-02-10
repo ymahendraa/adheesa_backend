@@ -9,6 +9,8 @@ module.exports = app => {
     // Retrieve all Pasien
     router.get("/", kunjungan.findAll);
   
+    router.get("/dpjp/drg.kamil", kunjungan.findKamil);
+
     // Retrieve a single Pasien with id
     // router.get("/:data_id", datalabs.findOne);
   
