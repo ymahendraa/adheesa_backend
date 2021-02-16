@@ -24,6 +24,7 @@ app.get("/", (req, res) => {
 require("./app/routes/pasien_route")(app);
 require("./app/routes/riwayat_penyakit_route")(app);
 require("./app/routes/datalab_route")(app);
+require("./app/routes/kunjungan_route")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
@@ -32,7 +33,7 @@ app.listen(PORT, () => {
 });
 
 const db = require("./app/models");
-// db.sequelize.sync();
-db.sequelize.sync({ force: true }).then(() => {
-  console.log("Drop and re-sync db.");
-});  
+db.sequelize.sync();
+// db.sequelize.sync({ force: true }).then(() => {
+//   console.log("Drop and re-sync db.");
+// });  

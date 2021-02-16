@@ -2,6 +2,7 @@ const db = require("../models");
 const Riwayat = db.riwayat;
 const Op = db.Sequelize.Op;
 const Pasien = db.pasien;
+var sequelize = require('sequelize');
 
 Pasien.hasMany(Riwayat, {foreignKey:'pasien_id'} );
 Riwayat.belongsTo(Pasien, {foreignKey:'pasien_id'});
@@ -68,9 +69,9 @@ exports.findAll = (req, res) => {
 exports.findAllOne = (req, res) => {
     const tanggal = req.query.tanggal;
     var condition = tanggal ? { tanggal : { [Op.like]: `%${tanggal}%` }} : null;
-    // var condition2 = {pasien_id : req.params.pasien_id}
+    var condition2 = {pasien_id : req.params.pasien_id}
 
-    Riwayat.findAll({where : condition})
+    Riwayat.findAll({where : condition2})
         .then(data => {
             res.send(data);
         })
@@ -86,8 +87,17 @@ exports.findKamil = (req, res) => {
     // const dpjp = req.params.dpjp;
     // var condition = tanggal ? { tanggal : { [Op.like]: `%${tanggal}%` }} : null;
     var condition = {dpjp : 'drg.Muhammad Kamil Nur'}
+    const tanggal = req.query.tanggal;
 
-    Riwayat.findAll({where : condition})
+    Riwayat.findAll({
+        where : {
+            dpjp : {[Op.like]:'%Kamil Nur%'},
+            tanggal : { [Op.like]: `%${tanggal}%` }
+        },
+        include: [{
+            model: Pasien
+        }]
+    })
         .then(data => {
             res.send(data);
         })
@@ -100,11 +110,19 @@ exports.findKamil = (req, res) => {
 };
 
 exports.findAmmar = (req, res) => {
-    // const tanggal = req.query.tanggal;
+    const tanggal = req.query.tanggal;
     // var condition = tanggal ? { tanggal : { [Op.like]: `%${tanggal}%` }} : null;
     var condition = {dpjp : 'drg.Ammar Abdullah'}
 
-    Riwayat.findAll({where : condition})
+    Riwayat.findAll({
+        where : {
+            dpjp : 'drg.Ammar Abdullah',
+            tanggal : { [Op.like]: `%${tanggal}%` }
+        },
+        include: [{
+            model: Pasien
+        }]
+    })
         .then(data => {
             res.send(data);
         })
@@ -117,11 +135,19 @@ exports.findAmmar = (req, res) => {
 };
 
 exports.findResya = (req, res) => {
-    // const tanggal = req.query.tanggal;
+    const tanggal = req.query.tanggal;
     // var condition = tanggal ? { tanggal : { [Op.like]: `%${tanggal}%` }} : null;
     var condition = {dpjp : 'drg.Resya Permatasari'}
 
-    Riwayat.findAll({where : condition})
+    Riwayat.findAll({
+        where : {
+            dpjp : 'drg.Resya Permatasari',
+            tanggal : { [Op.like]: `%${tanggal}%` }
+        },
+        include: [{
+            model: Pasien
+        }]
+    })
         .then(data => {
             res.send(data);
         })
@@ -194,3 +220,90 @@ exports.delete = (req, res) => {
             });
         });
 }
+
+exports.findKamilLaporan = (req, res) => {
+    // const dpjp = req.params.dpjp;
+    // var condition = tanggal ? { tanggal : { [Op.like]: `%${tanggal}%` }} : null;
+    var condition = {dpjp : 'drg.Muhammad Kamil Nur'}
+    const tanggal = req.query.tanggal;
+
+    Riwayat.findOne({
+        where: {
+            dpjp: 'drg.Muhammad Kamil Nur',
+            tanggal : { [Op.like]: `${tanggal}%` }
+        },
+        attributes: [
+            [sequelize.fn('sum', sequelize.col('biaya')), 'total'],
+            [sequelize.fn('count', sequelize.col('riwayat_id')), 'jumlah']
+        ],
+        raw: true,
+        // order: sequelize.literal('total DESC')
+    })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving riwayat."
+        });
+    });
+};
+
+exports.findAmmarLaporan = (req, res) => {
+    // const dpjp = req.params.dpjp;
+    // var condition = tanggal ? { tanggal : { [Op.like]: `%${tanggal}%` }} : null;
+    var condition = {dpjp : 'drg.Muhammad Kamil Nur'}
+    const tanggal = req.query.tanggal;
+
+    Riwayat.findOne({
+        where: {
+            dpjp: 'drg.Ammar Abdullah',
+            tanggal : { [Op.like]: `${tanggal}%` }
+        },
+        attributes: [
+            [sequelize.fn('sum', sequelize.col('biaya')), 'total'],
+            [sequelize.fn('count', sequelize.col('riwayat_id')), 'jumlah']
+        ],
+        raw: true,
+        // order: sequelize.literal('total DESC')
+    })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving riwayat."
+        });
+    });
+};
+
+exports.findResyaLaporan = (req, res) => {
+    // const dpjp = req.params.dpjp;
+    // var condition = tanggal ? { tanggal : { [Op.like]: `%${tanggal}%` }} : null;
+    var condition = {dpjp : 'drg.Muhammad Kamil Nur'}
+    const tanggal = req.query.tanggal;
+
+    Riwayat.findOne({
+        where: {
+            dpjp: 'drg.Resya Permatasari',
+            tanggal : { [Op.like]: `${tanggal}%` }
+        },
+        attributes: [
+            [sequelize.fn('sum', sequelize.col('biaya')), 'total'],
+            [sequelize.fn('count', sequelize.col('riwayat_id')), 'jumlah']
+        ],
+        raw: true,
+        // order: sequelize.literal('total DESC')
+    })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving riwayat."
+        });
+    });
+};
